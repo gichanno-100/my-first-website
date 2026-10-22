@@ -1,0 +1,8 @@
+/* 전역 스타일 — MUI CssBaseline 이후에 적용됩니다 */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
