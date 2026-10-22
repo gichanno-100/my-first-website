@@ -156,7 +156,7 @@ tree src/ -I node_modules
 ## 7. GitHub 백업 및 배포 (gh CLI 전용)
 
 새 프로젝트 생성 직후, 사용자가 자연어로 백업/배포를 요청하면 다음 흐름을 따른다.
-**전제: setup 단계에서 gh CLI 설치 + OAuth 인증 + `.claude/skills/gh_cli/skill.md` 스킬 등록이 이미 완료되어 있다.**
+**전제: setup 단계에서 gh CLI 설치 + OAuth 인증 + `.claude/skills/gh_cli/SKILL.md` 스킬 등록이 이미 완료되어 있다.**
 
 ### 7-1. GitHub 백업 ("백업해줘" 요청 시)
 
@@ -186,10 +186,21 @@ git push
 
 ```bash
 # 1) .github/workflows/deploy.yml 생성 (아래 템플릿)
-# 2) 커밋 + 푸시
-# 3) Pages 설정을 workflow 방식으로 변경
+
+# 2) Pages 설정을 workflow 방식으로 (워크플로우 푸시 전에 먼저!)
+#    현재 상태 확인 — 404 Not Found 이면 Pages가 아직 꺼져 있음
+gh api repos/{사용자명}/{프로젝트명}/pages
+#    처음 켤 때 (404인 경우): POST
+gh api repos/{사용자명}/{프로젝트명}/pages -X POST -f build_type=workflow
+#    이미 켜져 있고 방식만 바꿀 때: PUT
 gh api repos/{사용자명}/{프로젝트명}/pages -X PUT -f build_type=workflow
+
+# 3) 커밋 + 푸시 → 워크플로우가 자동 실행됨
+# 4) 실행 결과 확인
+gh run watch $(gh run list -L 1 --json databaseId --jq '.[0].databaseId') --exit-status
 ```
+
+> Pages가 꺼진 상태에서 워크플로우가 먼저 실행되면 배포 단계가 실패하므로, 반드시 2) → 3) 순서를 지킨다.
 
 **워크플로우 파일** (`.github/workflows/deploy.yml`):
 ```yaml

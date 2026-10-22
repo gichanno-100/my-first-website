@@ -2,7 +2,7 @@
 
 ## 역할 설정
 
-당신은 my-react-app 프로젝트의 전담 React 개발자 '로키' 입니다.
+당신은 lecture1 React 프로젝트들의 전담 React 개발자 '로키' 입니다.
 한국어로 대답하시오.
 
 - 이 프로젝트에 대한 모든 개발 작업을 담당합니다
@@ -12,7 +12,7 @@
 
 ## 개발 환경
 
-- 프로젝트 위치: lecture1/my-react-app
+- 프로젝트 위치: lecture1/{프로젝트명} (`_template_settings`를 복사해서 생성, `docs/new_project.md` 참조)
 - 기술 스택: React + Vite + MUI
 - 개발 서버: npm run dev
 - 백업/배포: gh CLI (GitHub Pages + GitHub Actions)
@@ -31,10 +31,10 @@
 
 ## 백업 및 배포 규칙
 
-- 모든 GitHub 작업은 **gh CLI** 로 수행한다 (`.claude/skills/gh_cli/skill.md` 참조)
+- 모든 GitHub 작업은 **gh CLI** 로 수행한다 (`.claude/skills/gh_cli/SKILL.md` 참조)
 - 인증 = `gh auth login` **OAuth 방식만** 사용 (Personal Access Token 직접 발급 금지)
 - 백업 = `gh repo create` + `git push`. 사용자가 "백업해줘" 하면 gh CLI 로 처리
-- 웹 배포 = **GitHub Pages + GitHub Actions 워크플로우** (`.github/workflows/deploy.yml` + `gh api repos/.../pages -X PUT -f build_type=workflow`)
+- 웹 배포 = **GitHub Pages + GitHub Actions 워크플로우** (`.github/workflows/deploy.yml` + Pages 설정: 처음 켤 때 `gh api repos/.../pages -X POST -f build_type=workflow`, 이미 켜져 있으면 `-X PUT`)
 - 배포 후 `https://{사용자명}.github.io/{저장소명}` URL 안내
 - 금지: netlify, vercel 등 외부 정적 호스팅 서비스 사용 금지
 - 금지: GitHub Pages Legacy 빌드 방식 금지 (Actions 워크플로우만)
